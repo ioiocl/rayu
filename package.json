@@ -1,0 +1,25 @@
+{
+  "name": "rayu",
+  "version": "1.0.0",
+  "description": "App colaborativa de micro historias con Neo4j + PostgreSQL",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "neo4j",
+    "collaborative-writing",
+    "javascript",
+    "graph"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "neo4j-driver": "^5.27.0",
+    "pg": "^8.14.1",
+    "uuid": "^11.0.5"
+  }
+}

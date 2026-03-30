@@ -1,0 +1,215 @@
+import { displayContent, escapeHtml } from "../domain/storyDomain.js";
+
+function createArrow(from, to) {
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  const midY = from.y + (to.y - from.y) * 0.5;
+  const d = `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y}`;
+  path.setAttribute("d", d);
+  path.setAttribute("class", "edge-path");
+  path.setAttribute("marker-end", "url(#arrowhead)");
+  return path;
+}
+
+export function createDomStoryReaderView() {
+  const titleElement = document.getElementById("storyTitle");
+  const metaElement = document.getElementById("storyMeta");
+  const emptyState = document.getElementById("emptyState");
+  const graphBoard = document.getElementById("graphBoard");
+  const edgesLayer = document.getElementById("edgesLayer");
+  const nodesLayer = document.getElementById("nodesLayer");
+  const chapterForm = document.getElementById("chapterForm");
+  const openChapterModalButton = document.getElementById("openChapterModal");
+  const closeChapterModalButton = document.getElementById("closeChapterModal");
+  const chapterModal = document.getElementById("chapterModal");
+  const chapterParent = document.getElementById("chapterParent");
+  const chapterContentText = document.getElementById("chapterContentText");
+  const chapterContentUrl = document.getElementById("chapterContentUrl");
+  const chapterType = document.getElementById("chapterType");
+
+  chapterType.addEventListener("change", () => {
+    if (chapterType.value === "image") {
+      chapterContentText.classList.add("hidden");
+      chapterContentText.removeAttribute("required");
+      chapterContentUrl.classList.remove("hidden");
+      chapterContentUrl.setAttribute("required", "");
+    } else {
+      chapterContentUrl.classList.add("hidden");
+      chapterContentUrl.removeAttribute("required");
+      chapterContentText.classList.remove("hidden");
+      chapterContentText.setAttribute("required", "");
+    }
+  });
+
+  function openChapterModal() {
+    chapterModal.classList.remove("hidden");
+  }
+
+  function closeChapterModal() {
+    chapterModal.classList.add("hidden");
+  }
+
+  openChapterModalButton.addEventListener("click", openChapterModal);
+  closeChapterModalButton.addEventListener("click", closeChapterModal);
+  chapterModal.addEventListener("click", (event) => {
+    if (event.target === chapterModal) {
+      closeChapterModal();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeChapterModal();
+    }
+  });
+
+  function setStoryHeader(story, chapterCount) {
+    titleElement.textContent = story?.title || "Historia";
+    const author = story?.createdBy ? `por ${story.createdBy}` : "";
+    metaElement.textContent = `${chapterCount} capítulo(s) ${author}`.trim();
+  }
+
+  function showEmptyState() {
+    emptyState.classList.remove("hidden");
+    graphBoard.classList.add("hidden");
+  }
+
+  function showGraph() {
+    emptyState.classList.add("hidden");
+    graphBoard.classList.remove("hidden");
+  }
+
+  function renderGraph({ layoutNodes, edges, width, height }) {
+    showGraph();
+
+    nodesLayer.innerHTML = "";
+    edgesLayer.innerHTML = "";
+    nodesLayer.style.width = `${width}px`;
+    nodesLayer.style.height = `${height}px`;
+    edgesLayer.style.width = `${width}px`;
+    edgesLayer.style.height = `${height}px`;
+    edgesLayer.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+    marker.setAttribute("id", "arrowhead");
+    marker.setAttribute("viewBox", "0 0 10 10");
+    marker.setAttribute("refX", "9");
+    marker.setAttribute("refY", "5");
+    marker.setAttribute("markerWidth", "7");
+    marker.setAttribute("markerHeight", "7");
+    marker.setAttribute("orient", "auto-start-reverse");
+    const arrow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    arrow.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+    arrow.setAttribute("class", "edge-arrow");
+    marker.appendChild(arrow);
+    defs.appendChild(marker);
+    edgesLayer.appendChild(defs);
+
+    const centerById = new Map();
+
+    for (const node of layoutNodes) {
+      const article = document.createElement("article");
+      article.className = "graph-node";
+      article.style.left = `${node.x}px`;
+      article.style.top = `${node.y}px`;
+      article.innerHTML = `
+        <header class="graph-node-header">
+          <span class="graph-node-chip">Capítulo ${escapeHtml(node.chapterNumber)}</span>
+          <span class="graph-node-type">${escapeHtml(node.contentType)}</span>
+        </header>
+        <div class="graph-node-content">
+          ${displayContent(node.contentType, node.content)}
+        </div>
+      `;
+
+      nodesLayer.appendChild(article);
+
+      centerById.set(node.id, {
+        x: node.x + node.width / 2,
+        y: node.y + node.height / 2,
+        top: node.y,
+        bottom: node.y + node.height,
+      });
+    }
+
+    for (const edge of edges) {
+      const from = centerById.get(edge.from);
+      const to = centerById.get(edge.to);
+
+      if (!from || !to) {
+        continue;
+      }
+
+      edgesLayer.appendChild(
+        createArrow(
+          { x: from.x, y: from.bottom },
+          { x: to.x, y: to.top }
+        )
+      );
+    }
+  }
+
+  function showLoadError(message) {
+    titleElement.textContent = "Error al cargar historia";
+    metaElement.textContent = message;
+    showEmptyState();
+  }
+
+  function populateParentOptions(nodes) {
+    chapterParent.innerHTML = "";
+
+    const sorted = [...nodes].sort(
+      (a, b) => Number(a.chapterNumber) - Number(b.chapterNumber)
+    );
+
+    for (const node of sorted) {
+      const option = document.createElement("option");
+      option.value = node.id;
+      option.textContent = `Capítulo ${node.chapterNumber} · ${node.contentType}`;
+      chapterParent.appendChild(option);
+    }
+  }
+
+  function bindChapterSubmit(handler) {
+    chapterForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      handler();
+    });
+  }
+
+  function readCreateChapterForm() {
+    const type = chapterType.value;
+    return {
+      username: document.getElementById("chapterUsername").value,
+      parentChapterId: chapterParent.value,
+      contentType: type,
+      content: type === "image" ? chapterContentUrl.value : chapterContentText.value,
+    };
+  }
+
+  function clearChapterInput() {
+    chapterContentText.value = "";
+    chapterContentUrl.value = "";
+    closeChapterModal();
+  }
+
+  function showSuccess(message) {
+    alert(message);
+  }
+
+  function showError(message) {
+    alert(message);
+  }
+
+  return {
+    setStoryHeader,
+    showEmptyState,
+    renderGraph,
+    populateParentOptions,
+    bindChapterSubmit,
+    readCreateChapterForm,
+    clearChapterInput,
+    showSuccess,
+    showLoadError,
+    showError,
+  };
+}

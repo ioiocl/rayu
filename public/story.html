@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rayu - Lectura de Historia</title>
+    <link rel="stylesheet" href="story.css" />
+  </head>
+  <body>
+    <header class="story-header">
+      <a class="back-link" href="/">← Volver al inicio</a>
+      <div>
+        <p class="eyebrow">Lectura en árbol</p>
+        <h1 id="storyTitle">Historia</h1>
+        <p id="storyMeta" class="story-meta">Cargando...</p>
+      </div>
+    </header>
+
+    <main class="story-main">
+      <section id="emptyState" class="empty-state hidden">
+        No se encontraron capítulos para esta historia.
+      </section>
+
+      <section id="graphBoard" class="graph-board hidden">
+        <svg id="edgesLayer" class="edges-layer" aria-hidden="true"></svg>
+        <div id="nodesLayer" class="nodes-layer"></div>
+      </section>
+    </main>
+
+    <button id="openChapterModal" class="fab-create" type="button" aria-label="Agregar capítulo">
+      + Capítulo
+    </button>
+
+    <div id="chapterModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="chapterModalTitle">
+      <section class="modal-card">
+        <div class="modal-header">
+          <h2 id="chapterModalTitle">Continuar historia</h2>
+          <button id="closeChapterModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+
+        <form id="chapterForm" class="chapter-form">
+          <input id="chapterUsername" placeholder="Tu usuario" required />
+
+          <label for="chapterParent">Continuar desde nodo</label>
+          <select id="chapterParent" required></select>
+
+          <label for="chapterType">Tipo de contenido</label>
+          <select id="chapterType" required>
+            <option value="text">Texto</option>
+            <option value="image">Imagen (URL)</option>
+          </select>
+
+          <textarea
+            id="chapterContentText"
+            rows="4"
+            placeholder="Escribe el nuevo capítulo"
+            required
+          ></textarea>
+          <input
+            id="chapterContentUrl"
+            type="url"
+            placeholder="Pega la URL de la imagen"
+            class="hidden"
+          />
+
+          <button type="submit">Agregar capítulo</button>
+        </form>
+      </section>
+    </div>
+
+    <script type="module" src="story-main.js"></script>
+  </body>
+</html>

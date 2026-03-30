@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rayu - Escritura Colaborativa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <img src="img/logo_RAYU.png" alt="Rayu" class="logo" />
+        <p class="subtitle">
+            Micro historias colaborativas
+        </p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>Home: micro historias</h2>
+        <div id="storiesList" class="story-list"></div>
+      </section>
+
+    </main>
+
+    <button id="openStoryModal" class="fab-create" type="button" aria-label="Crear historia">
+      + Nueva historia
+    </button>
+
+    <div id="storyModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle">
+      <section class="modal-card">
+        <div class="modal-header">
+          <h2 id="storyModalTitle">Crear micro historia</h2>
+          <button id="closeStoryModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+
+        <form id="storyForm" class="stack">
+          <input id="username" placeholder="Tu usuario" required />
+          <input id="title" placeholder="Título de la micro historia" required />
+
+          <label for="storyType">Tipo de capítulo 1</label>
+          <select id="storyType" required>
+            <option value="text">Texto</option>
+            <option value="image">Imagen (URL)</option>
+          </select>
+
+          <textarea id="storyContent" rows="5" placeholder="Escribe texto o pega URL de imagen" required></textarea>
+          <button type="submit">Publicar capítulo 1</button>
+        </form>
+      </section>
+    </div>
+
+    <template id="storyCardTemplate">
+      <article class="story-card">
+        <h3 class="story-title"></h3>
+        <p class="story-meta"></p>
+        <div class="story-preview"></div>
+      </article>
+    </template>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
