@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     container_name: rayu-app
     ports:
-      - "3000:3000"
+      - "80:80"
     environment:
-      PORT: 3000
+      PORT: 80
       NEO4J_URI: bolt://neo4j:7687
       NEO4J_USER: neo4j
       NEO4J_PASSWORD: rayu_neo4j_password
