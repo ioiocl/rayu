@@ -25,6 +25,40 @@ export function createDomStoryReaderView() {
   const chapterContentText = document.getElementById("chapterContentText");
   const chapterContentUrl = document.getElementById("chapterContentUrl");
   const chapterType = document.getElementById("chapterType");
+  const zoomWrapper = document.getElementById("zoomWrapper");
+  const zoomInButton = document.getElementById("zoomIn");
+  const zoomOutButton = document.getElementById("zoomOut");
+  const viewStoryButton = document.getElementById("viewStoryButton");
+  const storyViewerModal = document.getElementById("storyViewerModal");
+  const closeStoryViewerButton = document.getElementById("closeStoryViewer");
+  const storyViewerContent = document.getElementById("storyViewerContent");
+
+  let selectedNodes = new Set();
+  let currentLayoutNodes = [];
+
+  const ZOOM_STEP = 0.2;
+  const ZOOM_MIN = 0.3;
+  const ZOOM_MAX = 2.0;
+  let zoomLevel = 1.0;
+
+  function applyZoom() {
+    if (!zoomWrapper) return;
+    zoomWrapper.style.zoom = String(zoomLevel);
+  }
+
+  if (zoomInButton) {
+    zoomInButton.addEventListener("click", () => {
+      zoomLevel = Math.min(ZOOM_MAX, parseFloat((zoomLevel + ZOOM_STEP).toFixed(2)));
+      applyZoom();
+    });
+  }
+
+  if (zoomOutButton) {
+    zoomOutButton.addEventListener("click", () => {
+      zoomLevel = Math.max(ZOOM_MIN, parseFloat((zoomLevel - ZOOM_STEP).toFixed(2)));
+      applyZoom();
+    });
+  }
 
   chapterType.addEventListener("change", () => {
     if (chapterType.value === "image") {
@@ -79,6 +113,14 @@ export function createDomStoryReaderView() {
 
   function renderGraph({ layoutNodes, edges, width, height }) {
     showGraph();
+    zoomLevel = 1.0;
+    if (zoomWrapper) {
+      zoomWrapper.style.zoom = "1";
+    }
+
+    currentLayoutNodes = layoutNodes;
+    selectedNodes.clear();
+    updateViewStoryButton();
 
     nodesLayer.innerHTML = "";
     edgesLayer.innerHTML = "";
@@ -111,6 +153,7 @@ export function createDomStoryReaderView() {
       article.className = "graph-node";
       article.style.left = `${node.x}px`;
       article.style.top = `${node.y}px`;
+      article.dataset.nodeId = node.id;
       article.innerHTML = `
         <header class="graph-node-header">
           <span class="graph-node-chip">Capítulo ${escapeHtml(node.chapterNumber)}</span>
@@ -120,6 +163,9 @@ export function createDomStoryReaderView() {
           ${displayContent(node.contentType, node.content)}
         </div>
       `;
+
+      article.addEventListener("click", () => toggleNodeSelection(node.id));
+      article.style.cursor = "pointer";
 
       nodesLayer.appendChild(article);
 
@@ -146,6 +192,12 @@ export function createDomStoryReaderView() {
         )
       );
     }
+
+    // Scroll so the root node appears centered horizontally and at the top
+    requestAnimationFrame(() => {
+      graphBoard.scrollTop = 0;
+      graphBoard.scrollLeft = Math.max(0, (width - graphBoard.clientWidth) / 2);
+    });
   }
 
   function showLoadError(message) {
@@ -198,6 +250,90 @@ export function createDomStoryReaderView() {
 
   function showError(message) {
     alert(message);
+  }
+
+  function toggleNodeSelection(nodeId) {
+    if (selectedNodes.has(nodeId)) {
+      selectedNodes.delete(nodeId);
+    } else {
+      const clickedNode = currentLayoutNodes.find((n) => n.id === nodeId);
+      if (clickedNode) {
+        const sameLevelNodes = currentLayoutNodes.filter(
+          (n) => n.chapterNumber === clickedNode.chapterNumber
+        );
+        sameLevelNodes.forEach((n) => selectedNodes.delete(n.id));
+      }
+      selectedNodes.add(nodeId);
+    }
+    updateNodeStyles();
+    updateViewStoryButton();
+  }
+
+  function updateNodeStyles() {
+    const nodeElements = nodesLayer.querySelectorAll(".graph-node");
+    nodeElements.forEach((element) => {
+      const nodeId = element.dataset.nodeId;
+      if (selectedNodes.has(nodeId)) {
+        element.classList.add("selected");
+      } else {
+        element.classList.remove("selected");
+      }
+    });
+  }
+
+  function updateViewStoryButton() {
+    if (viewStoryButton) {
+      if (selectedNodes.size > 0) {
+        viewStoryButton.classList.remove("hidden");
+      } else {
+        viewStoryButton.classList.add("hidden");
+      }
+    }
+  }
+
+  function openStoryViewer() {
+    const sortedNodes = currentLayoutNodes
+      .filter((node) => selectedNodes.has(node.id))
+      .sort((a, b) => Number(a.chapterNumber) - Number(b.chapterNumber));
+
+    storyViewerContent.innerHTML = "";
+
+    for (const node of sortedNodes) {
+      const section = document.createElement("section");
+      section.className = "story-viewer-section";
+      section.innerHTML = `
+        <div class="story-viewer-header">
+          <span class="story-viewer-chip">Capítulo ${escapeHtml(node.chapterNumber)}</span>
+          <span class="story-viewer-type">${escapeHtml(node.contentType)}</span>
+        </div>
+        <div class="story-viewer-body">
+          ${displayContent(node.contentType, node.content)}
+        </div>
+      `;
+      storyViewerContent.appendChild(section);
+    }
+
+    storyViewerModal.classList.remove("hidden");
+  }
+
+  function closeStoryViewer() {
+    storyViewerModal.classList.add("hidden");
+  }
+
+  if (viewStoryButton) {
+    viewStoryButton.addEventListener("click", openStoryViewer);
+  }
+
+  if (closeStoryViewerButton) {
+    closeStoryViewerButton.addEventListener("click", closeStoryViewer);
+  }
+
+  if (storyViewerModal) {
+    storyViewerModal.addEventListener("click", (event) => {
+      if (event.target === storyViewerModal) {
+        closeStoryViewer();
+      }
+    });
   }
 
   return {

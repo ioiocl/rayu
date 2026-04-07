@@ -8,17 +8,15 @@
   </head>
   <body>
     <header class="hero">
-      <div>
-        <img src="img/logo_RAYU.png" alt="Rayu" class="logo" />
-        <p class="subtitle">
-            Micro historias colaborativas
-        </p>
+      <img src="img/logo_RAYU.png" alt="Rayu" class="logo" />
+      <p class="subtitle">Microhistorias colaborativas</p>
+      <div class="search-wrapper">
+        <input id="storySearch" class="search-input" type="search" placeholder="Buscar historia..." aria-label="Buscar historia" />
       </div>
     </header>
 
     <main class="layout">
       <section class="panel">
-        <h2>Home: micro historias</h2>
         <div id="storiesList" class="story-list"></div>
       </section>
 
@@ -56,6 +54,17 @@
         <h3 class="story-title"></h3>
         <p class="story-meta"></p>
         <div class="story-preview"></div>
+        <div class="story-actions">
+          <button class="action-btn action-share" type="button" aria-label="Compartir" title="Compartir">
+            🔗
+          </button>
+          <button class="action-btn action-like" type="button" aria-label="Me gusta" title="Me gusta">
+            👍
+          </button>
+          <button class="action-btn action-dislike" type="button" aria-label="No me gusta" title="No me gusta">
+            👎
+          </button>
+        </div>
       </article>
     </template>
 

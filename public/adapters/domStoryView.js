@@ -8,6 +8,21 @@ export function createDomStoryView() {
   const storyForm = document.getElementById("storyForm");
   const storiesList = document.getElementById("storiesList");
   const storyTemplate = document.getElementById("storyCardTemplate");
+  const storySearch = document.getElementById("storySearch");
+
+  let allStories = [];
+  let currentOnOpenStory = null;
+  let currentSelectedStory = null;
+
+  if (storySearch) {
+    storySearch.addEventListener("input", () => {
+      const query = storySearch.value.trim().toLowerCase();
+      const filtered = query
+        ? allStories.filter((s) => s.title.toLowerCase().includes(query))
+        : allStories;
+      renderStoryCards(filtered, currentSelectedStory, currentOnOpenStory);
+    });
+  }
   const storyDetail = document.getElementById("storyDetail");
   const openStoryModalButton = document.getElementById("openStoryModal");
   const closeStoryModalButton = document.getElementById("closeStoryModal");
@@ -38,7 +53,7 @@ export function createDomStoryView() {
     }
   });
 
-  function renderStories(stories, selectedStory, onOpenStory) {
+  function renderStoryCards(stories, selectedStory, onOpenStory) {
     storiesList.innerHTML = "";
 
     if (!stories.length) {
@@ -52,6 +67,9 @@ export function createDomStoryView() {
       const title = fragment.querySelector(".story-title");
       const meta = fragment.querySelector(".story-meta");
       const preview = fragment.querySelector(".story-preview");
+      const shareBtn = fragment.querySelector(".action-share");
+      const likeBtn = fragment.querySelector(".action-like");
+      const dislikeBtn = fragment.querySelector(".action-dislike");
 
       title.textContent = story.title;
       meta.textContent = `${story.createdBy} · ${story.chapterCount} capítulos`;
@@ -62,8 +80,44 @@ export function createDomStoryView() {
       }
 
       card.addEventListener("click", () => onOpenStory(story));
+
+      shareBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const url = `${window.location.origin}/story.html?storyId=${story.id}`;
+        navigator.clipboard.writeText(url).then(() => {
+          alert("Enlace copiado al portapapeles");
+        }).catch(() => {
+          alert(`Enlace: ${url}`);
+        });
+      });
+
+      likeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        likeBtn.style.background = "#d4edda";
+        dislikeBtn.style.background = "";
+      });
+
+      dislikeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dislikeBtn.style.background = "#f8d7da";
+        likeBtn.style.background = "";
+      });
+
       storiesList.appendChild(fragment);
     }
+  }
+
+  function renderStories(stories, selectedStory, onOpenStory) {
+    allStories = stories;
+    currentSelectedStory = selectedStory;
+    currentOnOpenStory = onOpenStory;
+
+    const query = storySearch ? storySearch.value.trim().toLowerCase() : "";
+    const filtered = query
+      ? stories.filter((s) => s.title.toLowerCase().includes(query))
+      : stories;
+
+    renderStoryCards(filtered, selectedStory, onOpenStory);
   }
 
   function openStoryPage(storyId) {

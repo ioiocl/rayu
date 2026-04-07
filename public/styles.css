@@ -29,18 +29,18 @@ body {
 .hero {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 24px 8px;
+  padding: 40px 24px 20px;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
 }
 
 .logo {
-  height: 56px;
+  height: 112px;
   width: auto;
   display: block;
-  margin-bottom: 0.5rem;
 }
 
 .eyebrow {
@@ -58,8 +58,34 @@ body {
 
 .subtitle {
   margin: 0;
-  max-width: 58ch;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 600;
   color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.search-wrapper {
+  width: 100%;
+  max-width: 520px;
+}
+
+.search-input {
+  width: 100%;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  padding: 12px 20px;
+  font-size: 1rem;
+  font: inherit;
+  background: var(--bg-panel);
+  color: var(--text-main);
+  box-shadow: 0 2px 8px rgba(15, 44, 27, 0.07);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 125, 90, 0.15);
 }
 
 .hero-badge {
@@ -226,6 +252,42 @@ button:hover {
   border-radius: 10px;
 }
 
+.story-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-panel);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  background: var(--bg-soft);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
 .detail-placeholder {
   padding: 14px;
   border-radius: 12px;
@@ -270,8 +332,7 @@ button:hover {
   }
 
   .hero {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .fab-create {

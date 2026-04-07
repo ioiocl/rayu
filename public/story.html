@@ -22,14 +22,35 @@
       </section>
 
       <section id="graphBoard" class="graph-board hidden">
-        <svg id="edgesLayer" class="edges-layer" aria-hidden="true"></svg>
-        <div id="nodesLayer" class="nodes-layer"></div>
+        <div id="zoomWrapper" class="zoom-wrapper">
+          <svg id="edgesLayer" class="edges-layer" aria-hidden="true"></svg>
+          <div id="nodesLayer" class="nodes-layer"></div>
+        </div>
       </section>
     </main>
+
+    <div class="fab-zoom-group" aria-label="Controles de zoom">
+      <button id="zoomIn" class="fab-zoom" type="button" aria-label="Acercar">+</button>
+      <button id="zoomOut" class="fab-zoom" type="button" aria-label="Alejar">−</button>
+    </div>
+
+    <button id="viewStoryButton" class="fab-view-story hidden" type="button" aria-label="Ver historia">
+      📖
+    </button>
 
     <button id="openChapterModal" class="fab-create" type="button" aria-label="Agregar capítulo">
       + Capítulo
     </button>
+
+    <div id="storyViewerModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="storyViewerTitle">
+      <section class="modal-card modal-story-viewer">
+        <div class="modal-header">
+          <h2 id="storyViewerTitle">Historia seleccionada</h2>
+          <button id="closeStoryViewer" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div id="storyViewerContent" class="story-viewer-content"></div>
+      </section>
+    </div>
 
     <div id="chapterModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="chapterModalTitle">
       <section class="modal-card">
