@@ -27,10 +27,10 @@ function createHttpApp({ storyService, authService, userService }) {
       name: "session",
       keys: [process.env.SESSION_SECRET || "rayu-secret-key-change-in-production"],
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      sameSite: "none",
-      secure: false,
     })
   );
+
+  app.options("*", cors());
 
   app.use(express.static(path.join(__dirname, "../../../public")));
 
