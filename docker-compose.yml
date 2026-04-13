@@ -12,6 +12,7 @@ services:
       NEO4J_USER: neo4j
       NEO4J_PASSWORD: rayu_neo4j_password
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/rayu
+      SESSION_SECRET: rayu-production-secret-change-this-in-production
     depends_on:
       postgres:
         condition: service_healthy
@@ -27,7 +28,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rayu
     ports:
-      - "5432:5432"
+      - "5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d rayu"]
       interval: 5s

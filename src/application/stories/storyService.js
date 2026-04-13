@@ -13,6 +13,7 @@ function validateContentType(contentType) {
 function createStoryService({
   storyRepository,
   storyGraphRepository,
+  notificationRepository,
   idGenerator,
   now,
 }) {
@@ -138,6 +139,17 @@ function createStoryService({
         parentChapterId,
         createdBy: user.id,
       });
+
+      const storyCreator = await tx.getStoryCreator(storyId);
+      if (storyCreator && storyCreator.id !== user.id && storyCreator.email) {
+        await notificationRepository.createNotification({
+          id: idGenerator(),
+          userId: storyCreator.id,
+          storyId,
+          chapterId,
+          message: `${username} agregó un nuevo capítulo a tu historia`,
+        });
+      }
     });
 
     return {

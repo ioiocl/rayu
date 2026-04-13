@@ -252,6 +252,24 @@ export function createDomStoryReaderView() {
     alert(message);
   }
 
+  function updateAuthState(user) {
+    const chapterUsernameField = document.getElementById("chapterUsername");
+    
+    if (user) {
+      if (chapterUsernameField) {
+        chapterUsernameField.value = user.nickname;
+        chapterUsernameField.readOnly = true;
+        chapterUsernameField.classList.add("readonly-field");
+      }
+    } else {
+      if (chapterUsernameField) {
+        chapterUsernameField.value = "";
+        chapterUsernameField.readOnly = false;
+        chapterUsernameField.classList.remove("readonly-field");
+      }
+    }
+  }
+
   function toggleNodeSelection(nodeId) {
     if (selectedNodes.has(nodeId)) {
       selectedNodes.delete(nodeId);
@@ -347,5 +365,6 @@ export function createDomStoryReaderView() {
     showSuccess,
     showLoadError,
     showError,
+    updateAuthState,
   };
 }

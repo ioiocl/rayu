@@ -31,6 +31,13 @@ body {
   padding: 28px 24px 8px;
   display: grid;
   gap: 14px;
+  position: relative;
+}
+
+.logo {
+  width: 140px;
+  height: auto;
+  display: block;
 }
 
 .back-link {
@@ -444,4 +451,247 @@ h1 {
     left: 14px;
     bottom: 14px;
   }
+}
+
+/* Auth styles */
+.user-section {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 16px;
+  background: var(--bg-panel);
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  transition: all 0.2s;
+  position: relative;
+}
+
+.user-icon:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(15, 125, 90, 0.15);
+}
+
+.user-avatar {
+  font-size: 1.5rem;
+}
+
+.user-nickname {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--accent);
+  color: white;
+  border-radius: 999px;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+}
+
+.auth-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 100;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-strong);
+}
+
+.btn-secondary {
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border: 1.5px solid var(--line);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.readonly-field {
+  background-color: #f0f4f1 !important;
+  color: var(--text-main) !important;
+  cursor: not-allowed !important;
+  border-color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.form-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+.nickname-status {
+  font-size: 0.85rem;
+  margin: -8px 0;
+}
+
+.modal-large {
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.profile-content {
+  padding: 20px;
+}
+
+.profile-info {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.user-avatar-large {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+  border-bottom: 2px solid var(--line);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--primary);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tab-badge {
+  background: var(--accent);
+  color: white;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.profile-item {
+  padding: 12px;
+  background: var(--bg-main);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.profile-item h4 {
+  margin: 0 0 4px 0;
+  color: var(--text-main);
+}
+
+.profile-item p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.profile-item small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.notification-item {
+  padding: 12px;
+  background: var(--bg-main);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border-left: 3px solid transparent;
+}
+
+.notification-item.unread {
+  border-left-color: var(--primary);
+  background: #f0f9f5;
+}
+
+.notification-item p {
+  margin: 0 0 4px 0;
+}
+
+.mark-read-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 8px;
 }

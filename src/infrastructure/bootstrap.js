@@ -50,7 +50,11 @@ async function bootstrapApp({ port, startupRetries, startupRetryDelayMs }) {
   });
 
   const container = createContainer();
-  const app = createHttpApp({ storyService: container.storyService });
+  const app = createHttpApp({ 
+    storyService: container.storyService,
+    authService: container.authService,
+    userService: container.userService,
+  });
 
   const server = app.listen(port, () => {
     console.log(`Rayu escuchando en http://localhost:${port}`);

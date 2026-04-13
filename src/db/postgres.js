@@ -15,8 +15,16 @@ async function initPostgres() {
     CREATE TABLE IF NOT EXISTS users (
       id UUID PRIMARY KEY,
       username TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE,
+      password TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
+  `);
+
+  await pool.query(`
+    ALTER TABLE users 
+    ADD COLUMN IF NOT EXISTS email TEXT UNIQUE,
+    ADD COLUMN IF NOT EXISTS password TEXT;
   `);
 
   await pool.query(`
@@ -40,6 +48,22 @@ async function initPostgres() {
       created_by UUID NOT NULL REFERENCES users(id),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS notifications (
+      id UUID PRIMARY KEY,
+      user_id UUID NOT NULL REFERENCES users(id),
+      story_id UUID NOT NULL REFERENCES stories(id),
+      chapter_id UUID NOT NULL,
+      message TEXT NOT NULL,
+      read BOOLEAN NOT NULL DEFAULT FALSE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id);
   `);
 }
 

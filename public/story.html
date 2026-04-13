@@ -8,11 +8,23 @@
   </head>
   <body>
     <header class="story-header">
+      <img src="img/logo_RAYU.png" alt="Rayu" class="logo" />
       <a class="back-link" href="/">← Volver al inicio</a>
       <div>
         <p class="eyebrow">Lectura en árbol</p>
         <h1 id="storyTitle">Historia</h1>
         <p id="storyMeta" class="story-meta">Cargando...</p>
+      </div>
+      <div id="userSection" class="user-section hidden">
+        <div class="user-icon" id="userIcon">
+          <div class="user-avatar">👤</div>
+          <span id="userNickname" class="user-nickname"></span>
+          <span id="notificationBadge" class="notification-badge hidden">0</span>
+        </div>
+      </div>
+      <div id="authButtons" class="auth-buttons">
+        <button id="loginBtn" class="btn-secondary" type="button">Iniciar sesión</button>
+        <button id="signupBtn" class="btn-primary" type="button">Registrarse</button>
       </div>
     </header>
 
@@ -86,6 +98,69 @@
 
           <button type="submit">Agregar capítulo</button>
         </form>
+      </section>
+    </div>
+
+    <div id="loginModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+      <section class="modal-card">
+        <div class="modal-header">
+          <h2 id="loginModalTitle">Iniciar sesión</h2>
+          <button id="closeLoginModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <form id="loginForm" class="stack">
+          <input id="loginEmail" type="email" placeholder="Email" required />
+          <input id="loginPassword" type="password" placeholder="Contraseña" required />
+          <button type="submit">Iniciar sesión</button>
+          <p class="form-footer">¿No tienes cuenta? <a href="#" id="switchToSignup">Regístrate</a></p>
+        </form>
+      </section>
+    </div>
+
+    <div id="signupModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="signupModalTitle">
+      <section class="modal-card">
+        <div class="modal-header">
+          <h2 id="signupModalTitle">Registrarse</h2>
+          <button id="closeSignupModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <form id="signupForm" class="stack">
+          <input id="signupEmail" type="email" placeholder="Email" required />
+          <input id="signupPassword" type="password" placeholder="Contraseña (mínimo 6 caracteres)" required minlength="6" />
+          <input id="signupNickname" type="text" placeholder="Nickname (mínimo 3 caracteres)" required minlength="3" />
+          <p id="nicknameAvailability" class="nickname-status"></p>
+          <button type="submit">Registrarse</button>
+          <p class="form-footer">¿Ya tienes cuenta? <a href="#" id="switchToLogin">Inicia sesión</a></p>
+        </form>
+      </section>
+    </div>
+
+    <div id="profileModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+      <section class="modal-card modal-large">
+        <div class="modal-header">
+          <h2 id="profileModalTitle">Mi Perfil</h2>
+          <button id="closeProfileModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div class="profile-content">
+          <div class="profile-info">
+            <div class="user-avatar-large">👤</div>
+            <h3 id="profileNickname"></h3>
+            <p id="profileEmail"></p>
+            <button id="logoutBtn" class="btn-secondary">Cerrar sesión</button>
+          </div>
+          <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="stories">Mis Historias</button>
+            <button class="tab-btn" data-tab="chapters">Mis Capítulos</button>
+            <button class="tab-btn" data-tab="inbox">Inbox <span id="inboxBadge" class="tab-badge hidden">0</span></button>
+          </div>
+          <div id="storiesTab" class="tab-content active">
+            <div id="userStories" class="user-stories"></div>
+          </div>
+          <div id="chaptersTab" class="tab-content">
+            <div id="userChapters" class="user-chapters"></div>
+          </div>
+          <div id="inboxTab" class="tab-content">
+            <div id="userNotifications" class="user-notifications"></div>
+          </div>
+        </div>
       </section>
     </div>
 

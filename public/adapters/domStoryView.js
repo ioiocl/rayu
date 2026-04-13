@@ -268,6 +268,35 @@ export function createDomStoryView() {
     alert(message);
   }
 
+  function updateAuthState(user) {
+    const usernameField = document.getElementById("username");
+    const chapterUsernameField = document.getElementById("chapterUsername");
+    
+    if (user) {
+      if (usernameField) {
+        usernameField.value = user.nickname;
+        usernameField.readOnly = true;
+        usernameField.classList.add("readonly-field");
+      }
+      if (chapterUsernameField) {
+        chapterUsernameField.value = user.nickname;
+        chapterUsernameField.readOnly = true;
+        chapterUsernameField.classList.add("readonly-field");
+      }
+    } else {
+      if (usernameField) {
+        usernameField.value = "";
+        usernameField.readOnly = false;
+        usernameField.classList.remove("readonly-field");
+      }
+      if (chapterUsernameField) {
+        chapterUsernameField.value = "";
+        chapterUsernameField.readOnly = false;
+        chapterUsernameField.classList.remove("readonly-field");
+      }
+    }
+  }
+
   return {
     renderStories,
     openStoryPage,
@@ -282,5 +311,6 @@ export function createDomStoryView() {
     bindChapterSubmit,
     showError,
     showSuccess,
+    updateAuthState,
   };
 }

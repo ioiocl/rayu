@@ -66,10 +66,22 @@ function createTransactionRepository(client) {
     );
   }
 
+  async function getStoryCreator(storyId) {
+    const result = await client.query(
+      `SELECT u.id, u.username, u.email
+       FROM stories s
+       JOIN users u ON u.id = s.created_by
+       WHERE s.id = $1`,
+      [storyId]
+    );
+    return result.rows[0] || null;
+  }
+
   return {
     findOrCreateUser,
     insertStory,
     insertChapterActivity,
+    getStoryCreator,
   };
 }
 

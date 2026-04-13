@@ -1,4 +1,4 @@
-export function createStoryApp({ storyApi, view }) {
+export function createStoryApp({ storyApi, view, authApp }) {
   let selectedStory = null;
   let selectedGraph = { nodes: [], edges: [] };
 
@@ -20,7 +20,13 @@ export function createStoryApp({ storyApi, view }) {
 
   async function handleCreateStory() {
     try {
+      const currentUser = authApp.getCurrentUser();
       const payload = view.readCreateStoryForm();
+      
+      if (currentUser) {
+        payload.username = currentUser.nickname;
+      }
+
       await storyApi.createStory(payload);
 
       view.resetStoryForm();
@@ -30,6 +36,10 @@ export function createStoryApp({ storyApi, view }) {
       await loadStories();
       view.renderStoryDetail(selectedStory, selectedGraph);
       view.showSuccess("Micro historia publicada");
+      
+      if (currentUser) {
+        authApp.updateNotificationBadge();
+      }
     } catch (error) {
       view.showError(error.message);
     }
@@ -41,13 +51,23 @@ export function createStoryApp({ storyApi, view }) {
     }
 
     try {
+      const currentUser = authApp.getCurrentUser();
       const payload = view.readCreateChapterForm();
+      
+      if (currentUser) {
+        payload.username = currentUser.nickname;
+      }
+
       await storyApi.createChapter(selectedStory.id, payload);
 
       view.clearChapterInput();
       await loadStories();
       await loadGraph(selectedStory.id);
       view.showSuccess("Capítulo agregado");
+      
+      if (currentUser) {
+        authApp.updateNotificationBadge();
+      }
     } catch (error) {
       view.showError(error.message);
     }

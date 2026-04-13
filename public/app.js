@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./config.js";
+
 const storyForm = document.getElementById("storyForm");
 const storiesList = document.getElementById("storiesList");
 const storyTemplate = document.getElementById("storyCardTemplate");
@@ -32,6 +34,7 @@ async function requestJson(url, options = {}) {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     ...options,
   });
 
@@ -168,12 +171,12 @@ function drawGraph() {
 }
 
 async function loadStories() {
-  const data = await requestJson("/api/stories");
+  const data = await requestJson(`${API_BASE_URL}/api/stories`);
   renderStories(data.stories);
 }
 
 async function loadGraph(storyId) {
-  const data = await requestJson(`/api/stories/${storyId}/graph`);
+  const data = await requestJson(`${API_BASE_URL}/api/stories/${storyId}/graph`);
   selectedGraph = data;
   renderStoryDetail();
   populateParentOptions();
@@ -190,7 +193,7 @@ storyForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   try {
-    await requestJson("/api/stories", {
+    await requestJson(`${API_BASE_URL}/api/stories`, {
       method: "POST",
       body: JSON.stringify({
         username: document.getElementById("username").value,
@@ -218,7 +221,7 @@ chapterForm.addEventListener("submit", async (event) => {
   }
 
   try {
-    await requestJson(`/api/stories/${selectedStory.id}/chapters`, {
+    await requestJson(`${API_BASE_URL}/api/stories/${selectedStory.id}/chapters`, {
       method: "POST",
       body: JSON.stringify({
         username: document.getElementById("chapterUsername").value,
