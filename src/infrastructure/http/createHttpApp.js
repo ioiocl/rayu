@@ -11,8 +11,13 @@ function createHttpApp({ storyService, authService, userService }) {
   const app = express();
 
   app.use(cors({
-    origin: true,
-    credentials: true
+    origin: function(origin, callback) {
+      callback(null, true);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Set-Cookie']
   }));
 
   app.use(express.json({ limit: "2mb" }));
@@ -22,6 +27,8 @@ function createHttpApp({ storyService, authService, userService }) {
       name: "session",
       keys: [process.env.SESSION_SECRET || "rayu-secret-key-change-in-production"],
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: false,
     })
   );
 
