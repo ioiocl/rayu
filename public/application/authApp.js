@@ -18,6 +18,7 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
     mobileLoginBtn: document.getElementById("mobileLoginBtn"),
     mobileSignupBtn: document.getElementById("mobileSignupBtn"),
     aboutBtn: document.getElementById("aboutBtn"),
+    aboutBtnDesktop: document.getElementById("aboutBtnDesktop"),
     aboutModal: document.getElementById("aboutModal"),
     closeAboutModal: document.getElementById("closeAboutModal"),
     
@@ -291,6 +292,12 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
     if (elements.aboutBtn) {
       elements.aboutBtn.addEventListener("click", () => {
         elements.mobileMenu.classList.add("hidden");
+        showModal(elements.aboutModal);
+      });
+    }
+    
+    if (elements.aboutBtnDesktop) {
+      elements.aboutBtnDesktop.addEventListener("click", () => {
         showModal(elements.aboutModal);
       });
     }
