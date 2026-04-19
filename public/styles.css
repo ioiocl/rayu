@@ -675,20 +675,30 @@ button:hover {
 
 .menu-toggle {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   width: 44px;
   height: 44px;
-  border: none;
+  border: 1.5px solid var(--line);
   background: var(--bg-panel);
   border-radius: 8px;
   cursor: pointer;
   z-index: 1001;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  font-size: 1.5rem;
+}
+
+.menu-toggle:hover {
+  border-color: var(--primary);
+  background: var(--bg-soft);
 }
 
 .hamburger-icon {
   font-size: 1.5rem;
+  line-height: 1;
 }
 
 .mobile-menu {
@@ -774,9 +784,7 @@ button:hover {
 
 @media (max-width: 768px) {
   .menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
   }
   .auth-buttons {
     display: none !important;
