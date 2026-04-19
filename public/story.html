@@ -80,23 +80,44 @@
           <label for="chapterType">Tipo de contenido</label>
           <select id="chapterType" required>
             <option value="text">Texto</option>
-            <option value="image">Imagen (URL)</option>
-            <option value="audio">Audio (URL)</option>
-            <option value="video">Video (URL)</option>
+            <option value="image">Imagen</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
           </select>
 
-          <textarea
-            id="chapterContentText"
-            rows="4"
-            placeholder="Escribe el nuevo capítulo"
-            required
-          ></textarea>
-          <input
-            id="chapterContentUrl"
-            type="url"
-            placeholder="Pega la URL de la imagen/audio/video"
-            class="hidden"
-          />
+          <div id="chapterTextInput" class="media-input">
+            <textarea id="chapterContentText" rows="4" placeholder="Escribe el nuevo capítulo" required></textarea>
+          </div>
+
+          <div id="chapterImageInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="chapterCaptureImage" class="btn-secondary">📸 Capturar foto</button>
+              <button type="button" id="chapterUploadImage" class="btn-secondary">📁 Subir imagen</button>
+              <button type="button" id="chapterUrlImage" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="chapterImagePreview" class="media-preview"></div>
+            <input id="chapterImageUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
+
+          <div id="chapterAudioInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="chapterRecordAudio" class="btn-secondary">🎤 Grabar audio (máx 30s)</button>
+              <button type="button" id="chapterUrlAudio" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="chapterAudioPreview" class="media-preview"></div>
+            <div id="chapterAudioProgress" class="progress-bar hidden"></div>
+            <input id="chapterAudioUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
+
+          <div id="chapterVideoInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="chapterRecordVideo" class="btn-secondary">🎥 Grabar video (máx 30s)</button>
+              <button type="button" id="chapterUrlVideo" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="chapterVideoPreview" class="media-preview"></div>
+            <div id="chapterVideoProgress" class="progress-bar hidden"></div>
+            <input id="chapterVideoUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
 
           <button type="submit">Agregar capítulo</button>
         </form>

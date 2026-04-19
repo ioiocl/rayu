@@ -219,11 +219,27 @@ export function createDomStoryView() {
   }
 
   function readCreateStoryForm() {
+    const type = document.getElementById("storyType").value;
+    let content = "";
+    
+    if (type === "text") {
+      content = document.getElementById("storyContent").value;
+    } else if (type === "image") {
+      const mediaUrl = window.storyMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("storyImageUrl").value;
+    } else if (type === "audio") {
+      const mediaUrl = window.storyMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("storyAudioUrl").value;
+    } else if (type === "video") {
+      const mediaUrl = window.storyMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("storyVideoUrl").value;
+    }
+    
     return {
       username: document.getElementById("username").value,
       title: document.getElementById("title").value,
-      contentType: document.getElementById("storyType").value,
-      content: document.getElementById("storyContent").value,
+      contentType: type,
+      content: content,
     };
   }
 

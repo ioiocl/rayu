@@ -605,3 +605,43 @@ button:hover {
     right: 10px;
   }
 }
+
+.media-input {
+  margin: 12px 0;
+}
+
+.media-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.media-preview {
+  margin-top: 12px;
+  min-height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.media-preview video,
+.media-preview img,
+.media-preview audio {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 24px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 12px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: width 0.1s linear;
+}

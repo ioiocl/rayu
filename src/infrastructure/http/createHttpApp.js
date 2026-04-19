@@ -6,6 +6,7 @@ const cookieSession = require("cookie-session");
 const { createStoriesRouter } = require("../../routes/stories");
 const { createAuthRouter } = require("../../routes/auth");
 const { createUsersRouter } = require("../../routes/users");
+const { createUploadRouter } = require("../../routes/upload");
 
 function createHttpApp({ storyService, authService, userService }) {
   const app = express();
@@ -40,6 +41,7 @@ function createHttpApp({ storyService, authService, userService }) {
 
   app.use("/api/auth", createAuthRouter({ authService }));
   app.use("/api/users", createUsersRouter({ userService }));
+  app.use("/api", createUploadRouter());
   app.use(
     "/api",
     createStoriesRouter({

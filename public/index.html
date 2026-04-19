@@ -51,12 +51,45 @@
           <label for="storyType">Tipo de capítulo 1</label>
           <select id="storyType" required>
             <option value="text">Texto</option>
-            <option value="image">Imagen (URL)</option>
-            <option value="audio">Audio (URL)</option>
-            <option value="video">Video (URL)</option>
+            <option value="image">Imagen</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
           </select>
 
-          <textarea id="storyContent" rows="5" placeholder="Escribe texto o pega URL de imagen/audio/video" required></textarea>
+          <div id="storyTextInput" class="media-input">
+            <textarea id="storyContent" rows="5" placeholder="Escribe el contenido" required></textarea>
+          </div>
+
+          <div id="storyImageInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="storyCaptureImage" class="btn-secondary">📸 Capturar foto</button>
+              <button type="button" id="storyUploadImage" class="btn-secondary">📁 Subir imagen</button>
+              <button type="button" id="storyUrlImage" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="storyImagePreview" class="media-preview"></div>
+            <input id="storyImageUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
+
+          <div id="storyAudioInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="storyRecordAudio" class="btn-secondary">🎤 Grabar audio (máx 30s)</button>
+              <button type="button" id="storyUrlAudio" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="storyAudioPreview" class="media-preview"></div>
+            <div id="storyAudioProgress" class="progress-bar hidden"></div>
+            <input id="storyAudioUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
+
+          <div id="storyVideoInput" class="media-input hidden">
+            <div class="media-options">
+              <button type="button" id="storyRecordVideo" class="btn-secondary">🎥 Grabar video (máx 30s)</button>
+              <button type="button" id="storyUrlVideo" class="btn-secondary">🔗 URL</button>
+            </div>
+            <div id="storyVideoPreview" class="media-preview"></div>
+            <div id="storyVideoProgress" class="progress-bar hidden"></div>
+            <input id="storyVideoUrl" type="url" placeholder="O pega una URL" class="hidden" />
+          </div>
+
           <button type="submit">Publicar capítulo 1</button>
         </form>
       </section>

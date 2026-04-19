@@ -60,19 +60,6 @@ export function createDomStoryReaderView() {
     });
   }
 
-  chapterType.addEventListener("change", () => {
-    if (chapterType.value === "image" || chapterType.value === "audio" || chapterType.value === "video") {
-      chapterContentText.classList.add("hidden");
-      chapterContentText.removeAttribute("required");
-      chapterContentUrl.classList.remove("hidden");
-      chapterContentUrl.setAttribute("required", "");
-    } else {
-      chapterContentUrl.classList.add("hidden");
-      chapterContentUrl.removeAttribute("required");
-      chapterContentText.classList.remove("hidden");
-      chapterContentText.setAttribute("required", "");
-    }
-  });
 
   function openChapterModal() {
     chapterModal.classList.remove("hidden");
@@ -230,11 +217,26 @@ export function createDomStoryReaderView() {
 
   function readCreateChapterForm() {
     const type = chapterType.value;
+    let content = "";
+    
+    if (type === "text") {
+      content = chapterContentText.value;
+    } else if (type === "image") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("chapterImageUrl").value;
+    } else if (type === "audio") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("chapterAudioUrl").value;
+    } else if (type === "video") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      content = mediaUrl || document.getElementById("chapterVideoUrl").value;
+    }
+    
     return {
       username: document.getElementById("chapterUsername").value,
       parentChapterId: chapterParent.value,
       contentType: type,
-      content: (type === "image" || type === "audio" || type === "video") ? chapterContentUrl.value : chapterContentText.value,
+      content: content,
     };
   }
 
