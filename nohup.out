@@ -1,0 +1,78 @@
+ Image rayu-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 478B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 175B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:20-bookworm-slim
+#3 DONE 0.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 120B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2.90kB done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/node:20-bookworm-slim@sha256:f93745c153377ee2fbbdd6e24efcd03cd2e86d6ab1d8aa9916a3790c40313a55
+#6 resolve docker.io/library/node:20-bookworm-slim@sha256:f93745c153377ee2fbbdd6e24efcd03cd2e86d6ab1d8aa9916a3790c40313a55 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY package*.json ./
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN npm install --omit=dev
+#9 CACHED
+
+#10 [5/5] COPY . .
+#10 DONE 0.0s
+
+#11 exporting to image
+#11 exporting layers 0.0s done
+#11 exporting manifest sha256:0f862ac23d1ece3d8e371a7c62c4c1fdd6472827ae7e8b6e75bae5ad16d9948d done
+#11 exporting config sha256:2d5928247bf345be6683aba01fcc39898fe1e115e6edc001b5b55805c1a2b5ac done
+#11 exporting attestation manifest sha256:9e7ad72dec706e29e99ee0473583d89fa33b583efbbf30ef281176594286926f done
+#11 exporting manifest list sha256:c45a51871b4f7ba92938a8a930423e1ad56013f9c5a198f6097bd6b48106f7c5 done
+#11 naming to docker.io/library/rayu-app:latest done
+#11 unpacking to docker.io/library/rayu-app:latest 0.0s done
+#11 DONE 0.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image rayu-app Built 
+time="2026-04-17T02:01:31Z" level=warning msg="Found orphan containers ([rayu-postgres]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container rayu-app Recreate 
+ Container rayu-app Recreated 
+Attaching to rayu-app, rayu-neo4j
+ Container rayu-neo4j Starting 
+ Container rayu-neo4j Started 
+ Container rayu-neo4j Waiting 
+rayu-neo4j  | Changed password for user 'neo4j'. IMPORTANT: this change will only take effect if performed before the database is started for the first time.
+rayu-neo4j  | 2026-04-17 02:01:37.073+0000 INFO  Logging config in use: File '/var/lib/neo4j/conf/user-logs.xml'
+rayu-neo4j  | 2026-04-17 02:01:37.107+0000 INFO  Starting...
+rayu-neo4j  | 2026-04-17 02:01:39.195+0000 INFO  This instance is ServerId{886c2481} (886c2481-535b-4296-a4d3-2220f583e572)
+rayu-neo4j  | 2026-04-17 02:01:41.001+0000 INFO  ======== Neo4j 5.22.0 ========
+rayu-neo4j  | 2026-04-17 02:01:42.795+0000 INFO  Anonymous Usage Data is being sent to Neo4j, see https://neo4j.com/docs/usage-data/
+rayu-neo4j  | 2026-04-17 02:01:42.835+0000 INFO  Bolt enabled on 0.0.0.0:7687.
+rayu-neo4j  | 2026-04-17 02:01:43.611+0000 INFO  HTTP enabled on 0.0.0.0:7474.
+rayu-neo4j  | 2026-04-17 02:01:43.612+0000 INFO  Remote interface available at http://localhost:7474/
+rayu-neo4j  | 2026-04-17 02:01:43.616+0000 INFO  id: FB5721096F4F1419748F304880D560A47D216A507810B4E45ABAA8B568173CE9
+rayu-neo4j  | 2026-04-17 02:01:43.616+0000 INFO  name: system
+rayu-neo4j  | 2026-04-17 02:01:43.617+0000 INFO  creationDate: 2026-03-30T17:19:02.901Z
+rayu-neo4j  | 2026-04-17 02:01:43.617+0000 INFO  Started.
+ Container rayu-neo4j Healthy 
+ Container rayu-app Starting 
+ Container rayu-app Started 
+rayu-app    | 
+rayu-app    | > rayu@1.0.0 start
+rayu-app    | > node src/server.js
+rayu-app    | 
+rayu-app    | Rayu escuchando en http://localhost:8080
+rayu-neo4j  | 2026-04-18 20:27:38.113+0000 WARN  [bolt-39169] Unsupported authentication token, missing key `scheme`
