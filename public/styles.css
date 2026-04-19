@@ -340,7 +340,7 @@ button:hover {
 }
 
 .user-section {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   z-index: 100;
@@ -388,7 +388,7 @@ button:hover {
 }
 
 .btn-about-desktop {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   padding: 10px 20px;
@@ -401,6 +401,7 @@ button:hover {
   cursor: pointer;
   transition: all 0.2s;
   z-index: 100;
+  width: auto;
 }
 
 .btn-about-desktop:hover {
@@ -409,7 +410,7 @@ button:hover {
 }
 
 .auth-buttons {
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: 20px;
   display: flex;
