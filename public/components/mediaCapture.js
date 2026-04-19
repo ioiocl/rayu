@@ -5,7 +5,7 @@ export function createMediaCapture() {
   let mediaRecorder = null;
   let recordedChunks = [];
   let recordingStartTime = null;
-  const MAX_DURATION = 30000;
+  const MAX_DURATION = 10000;
 
   async function uploadFile(file) {
     const formData = new FormData();

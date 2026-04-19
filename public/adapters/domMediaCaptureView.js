@@ -107,7 +107,7 @@ export function createDomMediaCaptureView(prefix) {
     if (isRecording) {
       mediaCapture.stopRecording();
       isRecording = false;
-      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 30s)";
+      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 10s)";
       elements.audioProgress.classList.add("hidden");
       return;
     }
@@ -128,12 +128,12 @@ export function createDomMediaCaptureView(prefix) {
       currentMediaUrl = url;
       
       elements.audioPreview.innerHTML = `<audio controls src="${url}" style="width: 100%;"></audio>`;
-      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 30s)";
+      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 10s)";
       elements.audioProgress.classList.add("hidden");
       isRecording = false;
     } catch (error) {
       alert(error.message);
-      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 30s)";
+      elements.recordAudioBtn.textContent = "🎤 Grabar audio (máx 10s)";
       elements.audioProgress.classList.add("hidden");
       isRecording = false;
     }
@@ -151,7 +151,7 @@ export function createDomMediaCaptureView(prefix) {
     if (isRecording) {
       mediaCapture.stopRecording();
       isRecording = false;
-      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 30s)";
+      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 10s)";
       elements.videoProgress.classList.add("hidden");
       return;
     }
@@ -175,12 +175,12 @@ export function createDomMediaCaptureView(prefix) {
       currentMediaUrl = url;
       
       elements.videoPreview.innerHTML = `<video controls src="${url}" style="max-width: 100%; border-radius: 8px;"></video>`;
-      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 30s)";
+      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 10s)";
       elements.videoProgress.classList.add("hidden");
       isRecording = false;
     } catch (error) {
       alert(error.message);
-      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 30s)";
+      elements.recordVideoBtn.textContent = "🎥 Grabar video (máx 10s)";
       elements.videoProgress.classList.add("hidden");
       isRecording = false;
     }
