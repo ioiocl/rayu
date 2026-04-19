@@ -264,14 +264,31 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
 
   function bindEvents() {
     if (elements.menuToggle) {
-      elements.menuToggle.addEventListener("click", () => {
-        elements.mobileMenu.classList.remove("hidden");
+      elements.menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        elements.mobileMenu.classList.toggle("hidden");
       });
     }
     
     if (elements.closeMobileMenu) {
       elements.closeMobileMenu.addEventListener("click", () => {
         elements.mobileMenu.classList.add("hidden");
+      });
+    }
+    
+    if (elements.mobileMenu) {
+      elements.mobileMenu.addEventListener("click", (e) => {
+        if (e.target === elements.mobileMenu) {
+          elements.mobileMenu.classList.add("hidden");
+        }
+      });
+      
+      document.addEventListener("click", (e) => {
+        if (!elements.mobileMenu.classList.contains("hidden") && 
+            !elements.mobileMenu.contains(e.target) && 
+            e.target !== elements.menuToggle) {
+          elements.mobileMenu.classList.add("hidden");
+        }
       });
     }
     
