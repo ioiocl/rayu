@@ -13,6 +13,32 @@
       <div class="search-wrapper">
         <input id="storySearch" class="search-input" type="search" placeholder="Buscar historia..." aria-label="Buscar historia" />
       </div>
+      <!-- Menú hamburguesa -->
+      <button id="menuToggle" class="menu-toggle" type="button" aria-label="Menú">
+        <span class="hamburger-icon">☰</span>
+      </button>
+      
+      <nav id="mobileMenu" class="mobile-menu hidden">
+        <div class="mobile-menu-content">
+          <button id="closeMobileMenu" class="menu-close" type="button" aria-label="Cerrar">×</button>
+          
+          <div id="mobileUserSection" class="mobile-user-section hidden">
+            <div class="mobile-user-info">
+              <div class="user-avatar-large">👤</div>
+              <span id="mobileUserNickname" class="mobile-user-nickname"></span>
+            </div>
+          </div>
+          
+          <div id="mobileAuthButtons" class="mobile-auth-buttons">
+            <button id="mobileLoginBtn" class="btn-menu" type="button">🔐 Iniciar sesión</button>
+            <button id="mobileSignupBtn" class="btn-menu" type="button">✨ Registrarse</button>
+          </div>
+          
+          <button id="aboutBtn" class="btn-menu" type="button">ℹ️ Acerca de</button>
+        </div>
+      </nav>
+      
+      <!-- Usuario logueado (desktop) -->
       <div id="userSection" class="user-section hidden">
         <div class="user-icon" id="userIcon">
           <div class="user-avatar">👤</div>
@@ -20,6 +46,8 @@
           <span id="notificationBadge" class="notification-badge hidden">0</span>
         </div>
       </div>
+      
+      <!-- Botones de auth (desktop) -->
       <div id="authButtons" class="auth-buttons">
         <button id="loginBtn" class="btn-secondary" type="button">Iniciar sesión</button>
         <button id="signupBtn" class="btn-primary" type="button">Registrarse</button>
@@ -154,6 +182,23 @@
           <div id="inboxTab" class="tab-content">
             <div id="userNotifications" class="user-notifications"></div>
           </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal Acerca de -->
+    <div id="aboutModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <section class="modal-card modal-large">
+        <div class="modal-header">
+          <h2>Acerca de RAYU</h2>
+          <button id="closeAboutModal" class="modal-close" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div class="about-content">
+          <p><strong>RAYU</strong> es una plataforma de escritura colaborativa diseñada para transformar la forma en que se crean y exploran historias. Pensada especialmente para personas con bloqueos creativos o interés en juegos narrativos, RAYU propone un entorno donde escribir deja de ser lineal y se convierte en una experiencia colectiva, dinámica y abierta.</p>
+          
+          <p>En RAYU, los usuarios no construyen historias de principio a fin, sino que contribuyen con pequeños fragmentos: textos, imágenes, audio u otros elementos multimedia que se conectan entre sí para formar una red narrativa en constante evolución.</p>
+          
+          <p>Cada aporte se integra como un nodo dentro de un grafo, permitiendo que una misma historia tenga múltiples caminos, versiones y bifurcaciones. En lugar de una única trama fija, emergen múltiples posibilidades narrativas que pueden explorarse libremente.</p>
         </div>
       </section>
     </div>

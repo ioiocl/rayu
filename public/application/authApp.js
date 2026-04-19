@@ -9,6 +9,18 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
     userIcon: document.getElementById("userIcon"),
     notificationBadge: document.getElementById("notificationBadge"),
     
+    menuToggle: document.getElementById("menuToggle"),
+    mobileMenu: document.getElementById("mobileMenu"),
+    closeMobileMenu: document.getElementById("closeMobileMenu"),
+    mobileUserSection: document.getElementById("mobileUserSection"),
+    mobileUserNickname: document.getElementById("mobileUserNickname"),
+    mobileAuthButtons: document.getElementById("mobileAuthButtons"),
+    mobileLoginBtn: document.getElementById("mobileLoginBtn"),
+    mobileSignupBtn: document.getElementById("mobileSignupBtn"),
+    aboutBtn: document.getElementById("aboutBtn"),
+    aboutModal: document.getElementById("aboutModal"),
+    closeAboutModal: document.getElementById("closeAboutModal"),
+    
     loginBtn: document.getElementById("loginBtn"),
     signupBtn: document.getElementById("signupBtn"),
     loginModal: document.getElementById("loginModal"),
@@ -56,13 +68,29 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
 
   function updateUI() {
     if (currentUser) {
-      if (elements.authButtons) elements.authButtons.classList.add("hidden");
-      if (elements.userSection) elements.userSection.classList.remove("hidden");
-      if (elements.userNickname) elements.userNickname.textContent = currentUser.nickname;
+      elements.authButtons.classList.add("hidden");
+      elements.userSection.classList.remove("hidden");
+      elements.userNickname.textContent = currentUser.nickname;
+      
+      if (elements.mobileUserSection) {
+        elements.mobileUserSection.classList.remove("hidden");
+        elements.mobileUserNickname.textContent = currentUser.nickname;
+      }
+      if (elements.mobileAuthButtons) {
+        elements.mobileAuthButtons.classList.add("hidden");
+      }
+      
       updateNotificationBadge();
     } else {
-      if (elements.authButtons) elements.authButtons.classList.remove("hidden");
-      if (elements.userSection) elements.userSection.classList.add("hidden");
+      elements.authButtons.classList.remove("hidden");
+      elements.userSection.classList.add("hidden");
+      
+      if (elements.mobileUserSection) {
+        elements.mobileUserSection.classList.add("hidden");
+      }
+      if (elements.mobileAuthButtons) {
+        elements.mobileAuthButtons.classList.remove("hidden");
+      }
     }
   }
 
@@ -234,6 +262,49 @@ export function createAuthApp({ authApi, userApi, onAuthChange }) {
   }
 
   function bindEvents() {
+    if (elements.menuToggle) {
+      elements.menuToggle.addEventListener("click", () => {
+        elements.mobileMenu.classList.remove("hidden");
+      });
+    }
+    
+    if (elements.closeMobileMenu) {
+      elements.closeMobileMenu.addEventListener("click", () => {
+        elements.mobileMenu.classList.add("hidden");
+      });
+    }
+    
+    if (elements.mobileLoginBtn) {
+      elements.mobileLoginBtn.addEventListener("click", () => {
+        elements.mobileMenu.classList.add("hidden");
+        showModal(elements.loginModal);
+      });
+    }
+    
+    if (elements.mobileSignupBtn) {
+      elements.mobileSignupBtn.addEventListener("click", () => {
+        elements.mobileMenu.classList.add("hidden");
+        showModal(elements.signupModal);
+      });
+    }
+    
+    if (elements.aboutBtn) {
+      elements.aboutBtn.addEventListener("click", () => {
+        elements.mobileMenu.classList.add("hidden");
+        showModal(elements.aboutModal);
+      });
+    }
+    
+    if (elements.closeAboutModal) {
+      elements.closeAboutModal.addEventListener("click", () => hideModal(elements.aboutModal));
+    }
+    
+    if (elements.aboutModal) {
+      elements.aboutModal.addEventListener("click", (e) => {
+        if (e.target === elements.aboutModal) hideModal(elements.aboutModal);
+      });
+    }
+    
     elements.loginBtn.addEventListener("click", () => showModal(elements.loginModal));
     elements.signupBtn.addEventListener("click", () => showModal(elements.signupModal));
     
