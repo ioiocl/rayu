@@ -11,6 +11,8 @@ const { createUploadRouter } = require("../../routes/upload");
 function createHttpApp({ storyService, authService, userService }) {
   const app = express();
 
+  app.set('trust proxy', 1);
+
   app.use(cors({
     origin: function(origin, callback) {
       callback(null, true);
@@ -28,6 +30,8 @@ function createHttpApp({ storyService, authService, userService }) {
       name: "session",
       keys: [process.env.SESSION_SECRET || "rayu-secret-key-change-in-production"],
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
     })
   );
 
