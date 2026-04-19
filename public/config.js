@@ -1,1 +1,1 @@
-export const API_BASE_URL = "http://45.7.230.104:8080";
+export const API_BASE_URL = window.location.origin;
