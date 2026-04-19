@@ -26,6 +26,14 @@ function displayContent(type, content) {
     return `<img src="${esc(content)}" alt="micro historia" />`;
   }
 
+  if (type === "audio") {
+    return `<audio controls src="${esc(content)}">Tu navegador no soporta el elemento de audio.</audio>`;
+  }
+
+  if (type === "video") {
+    return `<video controls src="${esc(content)}">Tu navegador no soporta el elemento de video.</video>`;
+  }
+
   return `<p>${esc(content)}</p>`;
 }
 

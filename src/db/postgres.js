@@ -31,7 +31,7 @@ async function initPostgres() {
     CREATE TABLE IF NOT EXISTS stories (
       id UUID PRIMARY KEY,
       title TEXT NOT NULL,
-      content_type TEXT NOT NULL CHECK (content_type IN ('text', 'image')),
+      content_type TEXT NOT NULL CHECK (content_type IN ('text', 'image', 'audio', 'video')),
       cover_content TEXT NOT NULL,
       created_by UUID NOT NULL REFERENCES users(id),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

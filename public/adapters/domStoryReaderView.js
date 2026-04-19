@@ -61,7 +61,7 @@ export function createDomStoryReaderView() {
   }
 
   chapterType.addEventListener("change", () => {
-    if (chapterType.value === "image") {
+    if (chapterType.value === "image" || chapterType.value === "audio" || chapterType.value === "video") {
       chapterContentText.classList.add("hidden");
       chapterContentText.removeAttribute("required");
       chapterContentUrl.classList.remove("hidden");
@@ -234,7 +234,7 @@ export function createDomStoryReaderView() {
       username: document.getElementById("chapterUsername").value,
       parentChapterId: chapterParent.value,
       contentType: type,
-      content: type === "image" ? chapterContentUrl.value : chapterContentText.value,
+      content: (type === "image" || type === "audio" || type === "video") ? chapterContentUrl.value : chapterContentText.value,
     };
   }
 

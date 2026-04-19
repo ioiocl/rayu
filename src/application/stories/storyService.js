@@ -5,8 +5,8 @@ function createAppError(message, status = 400) {
 }
 
 function validateContentType(contentType) {
-  if (!["text", "image"].includes(contentType)) {
-    throw createAppError("contentType debe ser text o image", 400);
+  if (!["text", "image", "audio", "video"].includes(contentType)) {
+    throw createAppError("contentType debe ser text, image, audio o video", 400);
   }
 }
 
