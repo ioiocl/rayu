@@ -138,6 +138,12 @@ export function createStoryReaderApp({ storyApi, view }) {
 
     try {
       const payload = view.readCreateChapterForm();
+      
+      if (!payload.content || payload.content.trim() === "") {
+        view.showError("Por favor proporciona contenido para el capítulo");
+        return;
+      }
+      
       await storyApi.createChapter(currentStoryId, payload);
       view.clearChapterInput();
       await loadStory(currentStoryId);

@@ -23,7 +23,6 @@ export function createDomStoryReaderView() {
   const chapterModal = document.getElementById("chapterModal");
   const chapterParent = document.getElementById("chapterParent");
   const chapterContentText = document.getElementById("chapterContentText");
-  const chapterContentUrl = document.getElementById("chapterContentUrl");
   const chapterType = document.getElementById("chapterType");
   const zoomWrapper = document.getElementById("zoomWrapper");
   const zoomInButton = document.getElementById("zoomIn");
@@ -241,8 +240,20 @@ export function createDomStoryReaderView() {
   }
 
   function clearChapterInput() {
-    chapterContentText.value = "";
-    chapterContentUrl.value = "";
+    if (chapterContentText) chapterContentText.value = "";
+    
+    const imageUrl = document.getElementById("chapterImageUrl");
+    const audioUrl = document.getElementById("chapterAudioUrl");
+    const videoUrl = document.getElementById("chapterVideoUrl");
+    
+    if (imageUrl) imageUrl.value = "";
+    if (audioUrl) audioUrl.value = "";
+    if (videoUrl) videoUrl.value = "";
+    
+    if (window.chapterMediaCapture) {
+      window.chapterMediaCapture.reset();
+    }
+    
     closeChapterModal();
   }
 

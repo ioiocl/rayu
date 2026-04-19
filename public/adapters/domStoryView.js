@@ -244,21 +244,49 @@ export function createDomStoryView() {
   }
 
   function readCreateChapterForm() {
+    const type = document.getElementById("chapterType").value;
+    let content = "";
+    
+    if (type === "text") {
+      const textField = document.getElementById("chapterContent");
+      content = textField ? textField.value : "";
+    } else if (type === "image") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      const urlField = document.getElementById("chapterImageUrl");
+      content = mediaUrl || (urlField ? urlField.value : "");
+    } else if (type === "audio") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      const urlField = document.getElementById("chapterAudioUrl");
+      content = mediaUrl || (urlField ? urlField.value : "");
+    } else if (type === "video") {
+      const mediaUrl = window.chapterMediaCapture?.getContent();
+      const urlField = document.getElementById("chapterVideoUrl");
+      content = mediaUrl || (urlField ? urlField.value : "");
+    }
+    
     return {
       username: document.getElementById("chapterUsername").value,
       parentChapterId: chapterParent.value,
-      contentType: document.getElementById("chapterType").value,
-      content: document.getElementById("chapterContent").value,
+      contentType: type,
+      content: content,
     };
   }
 
   function resetStoryForm() {
     storyForm.reset();
+    if (window.storyMediaCapture) {
+      window.storyMediaCapture.reset();
+    }
     closeStoryModal();
   }
 
   function clearChapterInput() {
-    document.getElementById("chapterContent").value = "";
+    const chapterContent = document.getElementById("chapterContent");
+    if (chapterContent) chapterContent.value = "";
+    
+    if (window.chapterMediaCapture) {
+      window.chapterMediaCapture.reset();
+    }
   }
 
   function bindStorySubmit(handler) {

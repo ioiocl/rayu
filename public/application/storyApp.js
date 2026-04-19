@@ -27,6 +27,11 @@ export function createStoryApp({ storyApi, view, authApp }) {
         payload.username = currentUser.nickname;
       }
 
+      if (!payload.content || payload.content.trim() === "") {
+        view.showError("Por favor proporciona contenido para el capítulo");
+        return;
+      }
+
       await storyApi.createStory(payload);
 
       view.resetStoryForm();
@@ -56,6 +61,11 @@ export function createStoryApp({ storyApi, view, authApp }) {
       
       if (currentUser) {
         payload.username = currentUser.nickname;
+      }
+
+      if (!payload.content || payload.content.trim() === "") {
+        view.showError("Por favor proporciona contenido para el capítulo");
+        return;
       }
 
       await storyApi.createChapter(selectedStory.id, payload);
